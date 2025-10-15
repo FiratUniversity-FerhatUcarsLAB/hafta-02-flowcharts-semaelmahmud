@@ -1,0 +1,27 @@
+digraph SmartHomeSecurity {
+
+    rankdir=LR;
+    node [shape=box, style=rounded];
+
+    Start [label="Başla"];
+    CheckSensors [label="Sensörleri Kontrol Et"];
+    SystemState [label="Durum Pasif mi?"];
+    Wait [label="Bekle 1 saniye"];
+    AlarmTrigger [label="Alarmı Çalıştır"];
+    NotifyUser [label="Kullanıcıya Bildirim Gönder"];
+    End [label="Sistem Çalışıyor"];
+
+    Start -> CheckSensors;
+    CheckSensors -> SystemState;
+    SystemState -> Wait [label="Evet (Pasif)"];
+    SystemState -> AlarmTrigger [label="Hayır (Aktif)"];
+
+    AlarmTrigger -> NotifyUser;
+    NotifyUser -> End;
+    Wait -> CheckSensors;
+
+    // Sensör kontrol ayrıntıları
+    CheckSensors -> AlarmTrigger [label="Hareket veya Kapı/Pencere Açıldı"];
+    CheckSensors -> Wait [label="Sensörler Normal"];
+
+}
