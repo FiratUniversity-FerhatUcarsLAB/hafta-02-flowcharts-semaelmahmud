@@ -1,0 +1,33 @@
+digraph HastaneRandevuVeTahlilSistemi {
+    rankdir=LR;
+    node [shape=box, style=rounded];
+
+    Start [label="Sistem Başlatılır", shape=oval];
+    Login [label="Kullanıcı Girişi"];
+    Menu [label="Ana Menü\n(Randevu Al, Tahlil Sonuçları, Çıkış)"];
+    
+    RandevuSec [label="Randevu Seçimi"];
+    TarihSec [label="Tarih ve Saat Seçimi"];
+    Onayla [label="Randevu Onayla"];
+    RandevuTamam [label="Randevu Alındı"];
+
+    TahlilGirisi [label="Tahlil Sonuçları Görüntüleme"];
+    TahlilGoster [label="Tahlil Sonuçları Göster"];
+
+    Cikis [label="Sistemden Çıkış", shape=oval];
+
+    Start -> Login;
+    Login -> Menu;
+
+    Menu -> RandevuSec [label="Randevu Al"];
+    Menu -> TahlilGirisi [label="Tahlil Sonuçları"];
+    Menu -> Cikis [label="Çıkış"];
+
+    RandevuSec -> TarihSec;
+    TarihSec -> Onayla;
+    Onayla -> RandevuTamam;
+    RandevuTamam -> Menu;
+
+    TahlilGirisi -> TahlilGoster;
+    TahlilGoster -> Menu;
+}
