@@ -1,0 +1,49 @@
+Başla
+
+Tanımla:
+    Dersler = liste (ders_id, ders_adı, kontenjan, kayıtlı_öğrenci_sayısı)
+    Öğrenciler = liste (öğrenci_id, öğrenci_adı, kayıtlı_dersler)
+    
+Fonksiyon Dersleri_Göster():
+    Dersler listesindeki tüm dersleri göster (ders_id, ders_adı, kontenjan, kalan_kontenjan)
+
+Fonksiyon Ders_Kaydet(öğrenci_id, ders_id):
+    Ders = Dersler içinde ders_id ile eşleşen dersi bul
+    Öğrenci = Öğrenciler içinde öğrenci_id ile eşleşen öğrenciyi bul
+    
+    Eğer Ders.kayıtlı_öğrenci_sayısı < Ders.kontenjan ise
+        Eğer ders, Öğrenci.kayıtlı_dersler içinde yoksa
+            Ders.kayıtlı_öğrenci_sayısı artır (+1)
+            Öğrenci.kayıtlı_dersler içine ders_id ekle
+            "Kayıt başarılı" mesajı ver
+        Değilse
+            "Bu derse zaten kayıtlısınız" mesajı ver
+    Değilse
+        "Dersin kontenjanı dolu" mesajı ver
+
+Fonksiyon Kayıtlı_Dersleri_Göster(öğrenci_id):
+    Öğrenci = Öğrenciler içinde öğrenci_id ile eşleşen öğrenciyi bul
+    Öğrenci.kayıtlı_dersler listesindeki dersleri göster
+
+Ana Menü:
+    1. Dersleri Göster
+    2. Derse Kayıt Ol
+    3. Kayıtlı Dersleri Görüntüle
+    4. Çıkış
+
+Döngü:
+    Menüden seçim al
+    Eğer seçim = 1 ise
+        Dersleri_Göster()
+    Eğer seçim = 2 ise
+        öğrenci_id ve ders_id al
+        Ders_Kaydet(öğrenci_id, ders_id)
+    Eğer seçim = 3 ise
+        öğrenci_id al
+        Kayıtlı_Dersleri_Göster(öğrenci_id)
+    Eğer seçim = 4 ise
+        Döngüyü kır ve çık
+    Değilse
+        "Geçersiz seçim" mesajı ver
+
+Bitir
