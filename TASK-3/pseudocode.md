@@ -1,0 +1,159 @@
+START SYSTEM
+
+DATABASE:
+    Users = []
+    Doctors = []
+    Appointments = []
+    Tests = []
+
+FUNCTION main():
+    WHILE True:
+        DISPLAY "1. Giriş Yap"
+        DISPLAY "2. Kayıt Ol"
+        DISPLAY "3. Çıkış"
+
+        secim = INPUT("Seçiminiz: ")
+
+        IF secim == "1":
+            user = userLogin()
+            IF user != NULL:
+                IF user.role == "hasta":
+                    hastaPanel(user)
+                ELSE IF user.role == "doktor":
+                    doktorPanel(user)
+                ELSE IF user.role == "admin":
+                    adminPanel()
+        ELSE IF secim == "2":
+            userRegister()
+        ELSE IF secim == "3":
+            BREAK
+        ELSE:
+            DISPLAY "Geçersiz seçim"
+
+FUNCTION userLogin():
+    tc = INPUT("TC Kimlik: ")
+    sifre = INPUT("Şifre: ")
+    FOR user IN Users:
+        IF user.tc == tc AND user.sifre == sifre:
+            DISPLAY "Giriş başarılı"
+            RETURN user
+    DISPLAY "Giriş başarısız"
+    RETURN NULL
+
+FUNCTION userRegister():
+    tc = INPUT("TC Kimlik: ")
+    ad = INPUT("Ad: ")
+    sifre = INPUT("Şifre: ")
+    role = INPUT("Rol (hasta/doktor/admin): ")
+    user = {tc: tc, ad: ad, sifre: sifre, role: role}
+    Users.append(user)
+    DISPLAY "Kayıt başarılı"
+
+FUNCTION hastaPanel(hasta):
+    WHILE True:
+        DISPLAY "1. Randevu Al"
+        DISPLAY "2. Randevularım"
+        DISPLAY "3. Tahlil Sonuçlarım"
+        DISPLAY "4. Çıkış"
+
+        secim = INPUT("Seçiminiz: ")
+
+        IF secim == "1":
+            randevuAl(hasta)
+        ELSE IF secim == "2":
+            listeleRandevular(hasta)
+        ELSE IF secim == "3":
+            gosterTahlilSonuclari(hasta)
+        ELSE IF secim == "4":
+            BREAK
+
+FUNCTION doktorPanel(doktor):
+    WHILE True:
+        DISPLAY "1. Randevulu Hastalarım"
+        DISPLAY "2. Tahlil İste"
+        DISPLAY "3. Tahlil Sonucu Gir"
+        DISPLAY "4. Çıkış"
+
+        secim = INPUT("Seçiminiz: ")
+
+        IF secim == "1":
+            listeleRandevular(doktor)
+        ELSE IF secim == "2":
+            tahlilIstegiGir(doktor)
+        ELSE IF secim == "3":
+            tahlilSonucuGir(doktor)
+        ELSE IF secim == "4":
+            BREAK
+
+FUNCTION adminPanel():
+    WHILE True:
+        DISPLAY "1. Doktor Ekle"
+        DISPLAY "2. Kullanıcıları Gör"
+        DISPLAY "3. Çıkış"
+        secim = INPUT("Seçiminiz: ")
+        IF secim == "1":
+            doktorEkle()
+        ELSE IF secim == "2":
+            FOR user IN Users:
+                DISPLAY user
+        ELSE IF secim == "3":
+            BREAK
+
+FUNCTION doktorEkle():
+    ad = INPUT("Ad: ")
+    brans = INPUT("Branş: ")
+    doktor = {ad: ad, brans: brans}
+    Doctors.append(doktor)
+    DISPLAY "Doktor eklendi"
+
+FUNCTION randevuAl(hasta):
+    DISPLAY "Mevcut Doktorlar:"
+    FOR index IN range(length(Doctors)):
+        DISPLAY index + 1, Doctors[index].ad, Doctors[index].brans
+
+    secim = INPUT("Doktor seç (numara): ")
+    doktor = Doctors[secim - 1]
+    tarih = INPUT("Tarih (GG/AA/YYYY): ")
+    saat = INPUT("Saat (HH:MM): ")
+
+    IF isSlotAvailable(doktor, tarih, saat):
+        Appointments.append({hasta: hasta.tc, doktor: doktor.ad, tarih: tarih, saat: saat})
+        DISPLAY "Randevu oluşturuldu"
+    ELSE:
+        DISPLAY "Bu saat dolu"
+
+FUNCTION isSlotAvailable(doktor, tarih, saat):
+    FOR r IN Appointments:
+        IF r.doktor == doktor.ad AND r.tarih == tarih AND r.saat == saat:
+            RETURN FALSE
+    RETURN TRUE
+
+FUNCTION listeleRandevular(kisi):
+    FOR r IN Appointments:
+        IF kisi.role == "hasta" AND r.hasta == kisi.tc:
+            DISPLAY r
+        ELSE IF kisi.role == "doktor" AND r.doktor == kisi.ad:
+            DISPLAY r
+
+FUNCTION tahlilIstegiGir(doktor):
+    hasta_tc = INPUT("Hasta TC: ")
+    testAdi = INPUT("İstenen Tahlil: ")
+    Tests.append({doktor: doktor.ad, hasta: hasta_tc, test: testAdi, sonuc: "", durum: "Bekliyor"})
+    DISPLAY "Tahlil talebi oluşturuldu"
+
+FUNCTION tahlilSonucuGir(doktor):
+    FOR t IN Tests:
+        IF t.doktor == doktor.ad AND t.sonuc == "":
+            DISPLAY t
+    testIndex = INPUT("Güncellenecek test numarası: ")
+    sonuc = INPUT("Sonuç: ")
+    Tests[testIndex].sonuc = sonuc
+    Tests[testIndex].durum = "Tamamlandı"
+    DISPLAY "Sonuç girildi"
+
+FUNCTION gosterTahlilSonuclari(hasta):
+    FOR t IN Tests:
+        IF t.hasta == hasta.tc:
+            DISPLAY "Test:", t.test, "| Sonuç:", t.sonuc, "| Durum:", t.durum
+
+END SYSTEM
