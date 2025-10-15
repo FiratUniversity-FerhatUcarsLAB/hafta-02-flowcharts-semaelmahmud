@@ -2,12 +2,20 @@
 Öğrenci No:250541618
 
 5 6 satırlık açıklama 
-başla
+ATM den para çekme algoritması 
+Açıklamalar:
 
-LLM sistemlerinden biraz yardım alıyorum.
-Kendim kod yazmaya çalışıyorum.
-youtubetan video izleyerek kendimidaha fazla geliştirmeye çalışıyorum.
-sözde kodlar kullanarak kod yazmaya çalışıyorum.
-kodları yazarken en başta kolay bir konu hakkında yazmaya çalışıyorum(yemek tarifleri ve tatlı tarifleri vb.)
+Kartı_tak(): Kullanıcının ATM’ye kartını takması.
 
-bitir
+PIN_kodu_gir(): PIN giriş ekranı.
+
+MENÜYÜ_GÖSTER(): Ana menü seçeneklerinin kullanıcıya sunulması (para çekme, bakiye sorgulama, çıkış vb.).
+
+BAKIYEYİ_GÜNCELLE(): Bakiyeden çekilen tutarın düşülmesi.
+
+PARA_VER(): ATM’nin fiziki olarak parayı vermesi.
+
+KARTI_IADE_ET(): İşlem sonunda kartın iade edilmesi.
+
+BİTİR: Programın sonlandırılması.
+
