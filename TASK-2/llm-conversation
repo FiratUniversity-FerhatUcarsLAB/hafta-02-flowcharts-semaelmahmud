@@ -68,4 +68,27 @@ Tekrarla:
 
 Son
 dot diline çevir 
+digraph SepetSistemi {
+    rankdir=LR;
+    node [shape=box, style=filled, color=lightblue];
 
+    Start [label="Başlat"]
+    Girdi [label="Kullanıcı Seçimi Al"]
+    Ekle [label="Ürün Ekle"]
+    Cikar [label="Ürün Çıkar"]
+    Goster [label="Sepeti Görüntüle"]
+    Odeme [label="Ödeme Yap"]
+    Bitir [label="Çıkış / Sonlandır"]
+
+    Start -> Girdi
+    Girdi -> Ekle [label="1 - Ürün Ekle"]
+    Girdi -> Cikar [label="2 - Ürün Çıkar"]
+    Girdi -> Goster [label="3 - Sepeti Görüntüle"]
+    Girdi -> Odeme [label="4 - Ödeme Yap"]
+    Girdi -> Bitir [label="5 - Çıkış"]
+
+    Ekle -> Girdi
+    Cikar -> Girdi
+    Goster -> Girdi
+    Odeme -> Girdi
+}
