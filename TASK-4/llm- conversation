@@ -50,3 +50,35 @@ Döngü:
 
 Bitir
 
+dote diline çevir 
+digraph DersKayitSistemi {
+    rankdir=TB;
+    node [shape=box, style=filled, color=lightblue];
+
+    start [label="Başla", shape=circle, color=green, style=filled];
+    menu [label="Ana Menü\n1. Dersleri Göster\n2. Derse Kayıt Ol\n3. Kayıtlı Dersleri Görüntüle\n4. Çıkış"];
+    secim [label="Seçim Al"];
+    ders_goster [label="Dersleri Göster"];
+    kayit_istek [label="Öğrenci ID ve Ders ID Al"];
+    ders_kaydet [label="Ders_Kaydet Fonksiyonu"];
+    kayitli_dersler_istek [label="Öğrenci ID Al"];
+    kayitli_dersler_goster [label="Kayıtlı Dersleri Göster"];
+    hata [label="Geçersiz Seçim"];
+    cikis [label="Çıkış", shape=doublecircle, color=red];
+
+    start -> menu;
+    menu -> secim;
+
+    secim -> ders_goster [label="1"];
+    secim -> kayit_istek [label="2"];
+    secim -> kayitli_dersler_istek [label="3"];
+    secim -> cikis [label="4"];
+    secim -> hata [label="Diğer"];
+
+    ders_goster -> menu;
+    kayit_istek -> ders_kaydet;
+    ders_kaydet -> menu;
+    kayitli_dersler_istek -> kayitli_dersler_goster;
+    kayitli_dersler_goster -> menu;
+    hata -> menu;
+}
